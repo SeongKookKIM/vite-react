@@ -1,7 +1,16 @@
 import "./App.css";
+import Editor from "./components/Editor";
+import Header from "./components/Header";
+import List from "./components/List";
 
 function App() {
-  return <>Todo List 연습</>;
+  return (
+    <div className="App">
+      <Header />
+      <Editor />
+      <List />
+    </div>
+  );
 }
 
 export default App;
