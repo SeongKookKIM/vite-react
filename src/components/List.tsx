@@ -1,7 +1,7 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { TodosType } from "../types/type";
-import { ChangeEvent, useCallback, useState } from "react";
+import { AnalysisResult, TodosType } from "../types/type";
+import { ChangeEvent, useCallback, useMemo, useState } from "react";
 
 interface TodosPropsType {
   todos: TodosType[] | undefined;
@@ -26,9 +26,27 @@ function List({ todos, onUpdate, onDelete }: TodosPropsType) {
 
   const filteredTodos = getFilteredData();
 
+  const { totalCount, doneCount, notDoneCount } = useMemo(() => {
+    console.log("data 호출");
+    const totalCount: number = todos?.length as number;
+    const doneCount: number = todos?.filter((todo) => todo.isDone)
+      .length as number;
+
+    const notDoneCount: number | undefined = totalCount - doneCount;
+
+    return {
+      totalCount,
+      doneCount,
+      notDoneCount,
+    };
+  }, [todos]);
+
   return (
     <div className="List">
       <h4>Todo List🎆</h4>
+      <div> total: {totalCount}</div>
+      <div> done: {doneCount}</div>
+      <div> notDone: {notDoneCount}</div>
       <input
         type="text"
         placeholder="검색어를 입력해주세요."
