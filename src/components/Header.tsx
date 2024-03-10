@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import "./Header.css";
 
 function Header() {
   const [date, setDate] = useState<Date>(new Date());
+  console.log(123);
 
   return (
     <div className="Header">
@@ -12,4 +13,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);

@@ -1,6 +1,6 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
-import { AnalysisResult, TodosType } from "../types/type";
+import { TodosType } from "../types/type";
 import { ChangeEvent, useCallback, useMemo, useState } from "react";
 
 interface TodosPropsType {
@@ -16,15 +16,13 @@ function List({ todos, onUpdate, onDelete }: TodosPropsType) {
     setSearch(e.target.value);
   };
 
-  const getFilteredData = useCallback(() => {
+  const filteredTodos = useMemo(() => {
     if (search === "") return todos;
 
     return todos?.filter((todo) =>
       todo.content.toLowerCase().includes(search.toLocaleLowerCase())
     );
   }, [search, todos]);
-
-  const filteredTodos = getFilteredData();
 
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
     console.log("data 호출");
