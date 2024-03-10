@@ -32,17 +32,18 @@ function TodoItem({ todo, onUpdate, onDelete }: TodoPropsType) {
 }
 // Memo시 현재 컴포넌트는 onUpade, onDelete값이 얕은비교로 인해 참조값이 변경된다 판단하여 리렌더링이 일어남
 // 고차 컴포넌트 (HOC)
-export default memo(
-  TodoItem,
-  (prevProps: TodoPropsType, nextProps: TodoPropsType): boolean => {
-    // 반환값에 따라, Props가 바뀌었는지 안바뀌었는지 판단
-    // T -> Props가 바뀌지 않음, 리렌더링X
-    // F -> Props가 바뀜, 리렌더링 O
-    if (prevProps.todo.id !== nextProps.todo.id) return false;
-    if (prevProps.todo.isDone !== nextProps.todo.isDone) return false;
-    if (prevProps.todo.content !== nextProps.todo.content) return false;
-    if (prevProps.todo.date !== nextProps.todo.date) return false;
+// export default memo(
+//   TodoItem,
+//   (prevProps: TodoPropsType, nextProps: TodoPropsType): boolean => {
+//     // 반환값에 따라, Props가 바뀌었는지 안바뀌었는지 판단
+//     // T -> Props가 바뀌지 않음, 리렌더링X
+//     // F -> Props가 바뀜, 리렌더링 O
+//     if (prevProps.todo.id !== nextProps.todo.id) return false;
+//     if (prevProps.todo.isDone !== nextProps.todo.isDone) return false;
+//     if (prevProps.todo.content !== nextProps.todo.content) return false;
+//     if (prevProps.todo.date !== nextProps.todo.date) return false;
 
-    return true;
-  }
-);
+//     return true;
+//   }
+// );
+export default memo(TodoItem);
