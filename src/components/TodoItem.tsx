@@ -4,13 +4,18 @@ import "./TodoItem.css";
 interface TodoPropsType {
   todo: TodosType;
   onUpdate: (tarketId: number) => void;
+  onDelete: (tarketId: number) => void;
 }
 
-function TodoItem({ todo, onUpdate }: TodoPropsType) {
+function TodoItem({ todo, onUpdate, onDelete }: TodoPropsType) {
   const { id, isDone, content, date } = todo;
 
   const onChangeCheckBox = () => {
     onUpdate(id);
+  };
+
+  const onClickDeleteButton = () => {
+    onDelete(id);
   };
 
   return (
@@ -18,7 +23,9 @@ function TodoItem({ todo, onUpdate }: TodoPropsType) {
       <input checked={isDone} type="checkbox" onChange={onChangeCheckBox} />
       <div className="content">{content}</div>
       <div className="date">{new Date(date).toLocaleDateString()}</div>
-      <button type="button">삭제</button>
+      <button type="button" onClick={onClickDeleteButton}>
+        삭제
+      </button>
     </div>
   );
 }

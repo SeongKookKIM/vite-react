@@ -1,14 +1,15 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
 import { TodosType } from "../types/type";
-import React, { ChangeEvent, useCallback, useState } from "react";
+import { ChangeEvent, useCallback, useState } from "react";
 
 interface TodosPropsType {
   todos: TodosType[] | undefined;
   onUpdate: (tarketId: number) => void;
+  onDelete: (tarketId: number) => void;
 }
 
-function List({ todos, onUpdate }: TodosPropsType) {
+function List({ todos, onUpdate, onDelete }: TodosPropsType) {
   const [search, setSearch] = useState<string>("");
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -21,7 +22,7 @@ function List({ todos, onUpdate }: TodosPropsType) {
     return todos?.filter((todo) =>
       todo.content.toLowerCase().includes(search.toLocaleLowerCase())
     );
-  }, [search]);
+  }, [search, todos]);
 
   const filteredTodos = getFilteredData();
 
@@ -39,7 +40,14 @@ function List({ todos, onUpdate }: TodosPropsType) {
         {filteredTodos && filteredTodos.length > 0 ? (
           <>
             {filteredTodos.map((todo) => {
-              return <TodoItem key={todo.id} todo={todo} onUpdate={onUpdate} />;
+              return (
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  onUpdate={onUpdate}
+                  onDelete={onDelete}
+                />
+              );
             })}
           </>
         ) : (

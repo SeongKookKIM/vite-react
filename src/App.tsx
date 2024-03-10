@@ -43,7 +43,6 @@ function App() {
 
   const onUpdate = (targetId: number) => {
     // Todos State의 값들 중에 TargetId와 일치하는 id를 갖는 투두 아이템의 isDone 변경
-
     setTodos(
       todos.map((todo) =>
         todo.id === targetId ? { ...todo, isDone: !todo.isDone } : todo
@@ -51,11 +50,15 @@ function App() {
     );
   };
 
+  const onDelete = (targetId: number) => {
+    setTodos(todos.filter((todo) => todo.id !== targetId));
+  };
+
   return (
     <div className="App">
       <Header />
       <Editor onCreate={onCreate} />
-      <List todos={todos} onUpdate={onUpdate} />
+      <List todos={todos} onUpdate={onUpdate} onDelete={onDelete} />
     </div>
   );
 }
