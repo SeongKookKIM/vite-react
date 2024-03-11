@@ -1,15 +1,12 @@
 import "./List.css";
 import TodoItem from "./TodoItem";
 import { TodosType } from "../types/type";
-import { ChangeEvent, useCallback, useMemo, useState } from "react";
+import { ChangeEvent, useContext, useMemo, useState } from "react";
+import { TodoStateContext } from "../App";
 
-interface TodosPropsType {
-  todos: TodosType[] | undefined;
-  onUpdate: (tarketId: number) => void;
-  onDelete: (tarketId: number) => void;
-}
+function List() {
+  const todos = useContext(TodoStateContext);
 
-function List({ todos, onUpdate, onDelete }: TodosPropsType) {
   const [search, setSearch] = useState<string>("");
 
   const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -19,7 +16,7 @@ function List({ todos, onUpdate, onDelete }: TodosPropsType) {
   const filteredTodos = useMemo(() => {
     if (search === "") return todos;
 
-    return todos?.filter((todo) =>
+    return todos?.filter((todo: TodosType) =>
       todo.content.toLowerCase().includes(search.toLocaleLowerCase())
     );
   }, [search, todos]);
@@ -27,7 +24,7 @@ function List({ todos, onUpdate, onDelete }: TodosPropsType) {
   const { totalCount, doneCount, notDoneCount } = useMemo(() => {
     console.log("data 호출");
     const totalCount: number = todos?.length as number;
-    const doneCount: number = todos?.filter((todo) => todo.isDone)
+    const doneCount: number = todos?.filter((todo: TodosType) => todo.isDone)
       .length as number;
 
     const notDoneCount: number | undefined = totalCount - doneCount;
@@ -55,15 +52,8 @@ function List({ todos, onUpdate, onDelete }: TodosPropsType) {
       <div className="todos_wrapper">
         {filteredTodos && filteredTodos.length > 0 ? (
           <>
-            {filteredTodos.map((todo) => {
-              return (
-                <TodoItem
-                  key={todo.id}
-                  todo={todo}
-                  onUpdate={onUpdate}
-                  onDelete={onDelete}
-                />
-              );
+            {filteredTodos.map((todo: TodosType) => {
+              return <TodoItem key={todo.id} todo={todo} />;
             })}
           </>
         ) : (

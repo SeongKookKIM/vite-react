@@ -1,14 +1,14 @@
 import { TodosType } from "../types/type";
-import { memo } from "react";
+import { memo, useContext } from "react";
 import "./TodoItem.css";
+import { TodoDispatchContext } from "../App";
 
 interface TodoPropsType {
   todo: TodosType;
-  onUpdate: (tarketId: number) => void;
-  onDelete: (tarketId: number) => void;
 }
 
-function TodoItem({ todo, onUpdate, onDelete }: TodoPropsType) {
+function TodoItem({ todo }: TodoPropsType) {
+  const { onUpdate, onDelete } = useContext(TodoDispatchContext);
   const { id, isDone, content, date } = todo;
 
   const onChangeCheckBox = () => {

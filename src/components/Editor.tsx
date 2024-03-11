@@ -1,11 +1,9 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef, useState, useContext } from "react";
 import "./Editor.css";
+import { TodoDispatchContext } from "../App";
 
-interface OnCreateType {
-  onCreate: (content: string) => void;
-}
-
-function Editor({ onCreate }: OnCreateType) {
+function Editor() {
+  const { onCreate } = useContext(TodoDispatchContext);
   const [content, setContent] = useState<string>("");
   const contentRef = useRef<HTMLInputElement>(null);
 
