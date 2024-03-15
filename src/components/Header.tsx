@@ -1,9 +1,10 @@
+/* eslint-disable*/
 import { memo, useState } from "react";
 import "./Header.css";
 
 function Header() {
   const [date, setDate] = useState<Date>(new Date());
-  console.log(123);
+  console.log(setDate);
 
   return (
     <div className="Header">
